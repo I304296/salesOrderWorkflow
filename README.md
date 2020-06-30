@@ -1,6 +1,10 @@
-# Getting Started
+# SalesOrder Workflow Management CAP Project
 
-Welcome to your new project.
+This CAP project is the main custom cloud application running as a microservice in SCP-CF to support the entire Order to Cash flow.
+This module encapsulates the underlying data model to support corelation between Sales Orders, delivery and related workflow.
+Also this CAP project is liseting to EMS channel for Business Events generated out of S/4 systems, e.g. while outbound delivery is created.
+
+Further this program acts as a broker to mediate actions of Business Events and orchestrate the Workflow actions.
 
 It contains these folders and files, following our recommended project layout:
 
