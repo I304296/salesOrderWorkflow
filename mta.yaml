@@ -1,0 +1,69 @@
+## Generated mta.yaml based on template version 0.2.0
+## appName = salesOrderWorkflow
+## language=nodejs; multiTenant=false
+## approuter=
+_schema-version: '3.1'
+ID: salesOrderWorkflow
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true  
+build-parameters:
+  before-all:
+   - builder: custom
+     commands:
+      - npm install
+      - npx cds build\/all
+
+modules:
+ # --------------------- SERVER MODULE ------------------------
+ - name: salesOrderWorkflow-srv
+ # ------------------------------------------------------------
+   type: nodejs
+   path: gen/srv
+   properties:
+     EXIT: 1  # required by deploy.js task to terminate 
+   requires: 
+      - name: salesOrderWorkflow-db-hdi-container  
+      - name: IntSCPAppEM  
+      - name: com-sap-salesorder-xsuaa
+      - name: s4dest 
+
+ # --------------------- DB MODULE ------------------------
+ - name: salesOrderWorkflow-db
+ # ------------------------------------------------------------
+   type: hdb
+   path: gen/db
+   requires: 
+    - name: salesOrderWorkflow-db-hdi-container   
+
+resources: 
+  # SAP HANA Service
+ - name: salesOrderWorkflow-db-hdi-container
+   type: org.cloudfoundry.managed-service
+   parameters:
+    service: hana
+    service-plan: hdi-shared  
+  # Enterprise Messaging Service  
+ - name: IntSCPAppEM
+   type: org.cloudfoundry.existing-service
+   parameters:
+     service: enterprise-messaging
+     service-plan: default  
+  # Destination
+ - name: s4dest
+   type: org.cloudfoundry.existing-service
+   parameters:
+     service: destination
+     service-plan: lite  
+ - name: com-sap-salesorder-xsuaa
+   type: org.cloudfoundry.existing-service
+   parameters:
+     service: xsuaa
+     service-plan: application 
+
+
+     
+
+
+

@@ -1,0 +1,72 @@
+{
+  "name": "salesOrderWorkflow",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^3",
+    "@sap/hana-client": "^2.4.196",
+    "@sap/xb-msg-amqp-v100": "^0.9.40",
+    "axios": "^0.19.2",
+    "cd-common": "^0.13.2",
+    "cfenv": "^1.2.2",
+    "express": "^4",
+    "request": "^2.88.2"
+  },
+  "scripts": {
+    "start": "cds run",
+    "build:mta-sample command:do-not-run-on-cli": "NODE_ENV=production cds build/all then NODE_ENV=production mbt build -p=cf then cf deploy ./mta_archives/*.mtar"
+  },
+  "cds": {
+    "requires": {
+      "API_DELIVERY_SRV_CLOUD": {
+        "kind": "odata",
+        "model": "srv/external/API_OUTBOUND_DELIVERY_SRV",
+        "credentials": {
+          "destination": "s4h_cloud"
+        }
+      },
+      "db": {
+        "[production]": {
+          "kind": "hana",
+          "model": [
+            "db/",
+            "srv/",
+            "app/",
+            "schema",
+            "services",
+            []
+          ]
+        },
+        "kind": "hana"
+      },
+      "messaging": {
+        "kind": "enterprise-messaging",
+        "credentials": {
+          "queue": "SCPNAPra/IntSCPEM/ZMAEM/S4OPSO"
+        }
+      },
+      "API_OUTBOUND_DELIVERY_SRV": {
+        "kind": "odata",
+        "model": "srv/external/API_OUTBOUND_DELIVERY_SRV_0002",
+        "credentials": {
+          "destination": "s4h_cloud"
+        }
+      },
+      "API_SALESORDER_WORKFLOW_SRV": {
+        "kind": "odata",
+        "credentials": {
+          "destination": "CAP_OData"
+        }
+      },
+      "API_WORKFLOW": {
+        "kind": "rest",
+        "credentials": {
+          "destination": "Workflow"
+        }
+      }
+    }
+  }
+}
