@@ -17,11 +17,11 @@ File / Folder | Purpose
 `readme.md` | this getting started guide
 
 
-## Next Steps...
+## To run this project...
 
-- Open a new terminal and run  `cds watch`
-- ( in VSCode simply choose _**Terminal** > Run Task > cds watch_ )
-- Start adding content, e.g. a [db/schema.cds](db/schema.cds), ...
+- Import the project to your workspace in SAP Business Application Studio or VS Code
+- Follow depplyment instructions mentioned in the package.json
+- Pre-requisite: Check mta.yml for services of type org.cloudfoundry.existing-service. You need to create service instances with the same name before deployment
 
 
 ## Learn more...
