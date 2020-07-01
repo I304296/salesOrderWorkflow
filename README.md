@@ -20,7 +20,10 @@ File / Folder | Purpose
 ## To run this project...
 
 - Import the project to your workspace in SAP Business Application Studio or VS Code
-- Follow depplyment instructions mentioned in the package.json
+- Follow deployment instructions mentioned in the package.json. Run the following commands from CLI from the root project folder.
+  NODE_ENV=production cds build/all 
+  NODE_ENV=production mbt build -p=cf 
+  cf deploy ./mta_archives/<mtafilename>.mtar
 - Pre-requisite: Check mta.yml for services of type org.cloudfoundry.existing-service. You need to create service instances with the same name before deployment
 
 
